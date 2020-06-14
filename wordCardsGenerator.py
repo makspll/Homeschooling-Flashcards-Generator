@@ -56,7 +56,8 @@ supportedExtensions = [
 # find words
 wordsRaw = []
 
-with open(wordsFile,'r','utf-8') as words:
+with open(wordsFile, mode='r', encoding='UTF-8') as words:
+
     line = words.readline()
     while line != "" and line != '\n':
         
