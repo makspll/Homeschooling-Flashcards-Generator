@@ -2,7 +2,6 @@ import xlsxwriter
 import os
 import shutil
 from PIL import Image
-from icrawler.builtin import GoogleImageCrawler
 
 def CalculateImageScaleRatioToFitSize(width, height, desiredSquareSize):
     heightRatio = desiredSquareSize/height

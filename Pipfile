@@ -6,9 +6,6 @@ name = "pypi"
 [packages]
 XlsxWriter = "*"
 Pillow = "*"
-google-images-download = "*"
-icrawler = "*"
-
 [dev-packages]
 
 [requires]
