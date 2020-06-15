@@ -19,7 +19,7 @@ def InsertImageAtCellIfFound(row,col,word):
             width,height = image.size
 
             scale = CalculateImageScaleRatioToFitSize(width,height, imageMaxSquareSize)
-            print("Loaded:" + imagePath, " Rescaled With:" + scale + " ratio")
+            print("Loaded:" + imagePath, " Rescaled With:" + str(scale) + " ratio")
             worksheet.insert_image(row,0,imagePath,{'x_scale':scale,'y_scale':scale})
             foundPicture = True
             break
