@@ -8,7 +8,6 @@ def CalculateImageScaleRatioToFitSize(width, height, desiredSquareSize):
     widthRatio = desiredSquareSize/width
 
     biggestResize = min(heightRatio,widthRatio)
-    print(biggestResize)
     return biggestResize
 
 def InsertImageAtCellIfFound(row,col,word):
@@ -20,7 +19,7 @@ def InsertImageAtCellIfFound(row,col,word):
             width,height = image.size
 
             scale = CalculateImageScaleRatioToFitSize(width,height, imageMaxSquareSize)
-            print("Loaded:" + imagePath)
+            print("Loaded:" + imagePath, " Rescaled With:" + scale + " ratio")
             worksheet.insert_image(row,0,imagePath,{'x_scale':scale,'y_scale':scale})
             foundPicture = True
             break
@@ -81,27 +80,28 @@ with xlsxwriter.Workbook(workbookName) as workbook:
     all_cell_format = workbook.add_format({'bold':True})
 
     worksheet.set_column(startingWordColumnIdx,999,letterGridWidth,all_cell_format)
-    letter_cell_format = workbook.add_format({'bold':True})
-    letter_cell_format.set_border(1)
-    letter_cell_format.set_align("center")
-    letter_cell_format.set_align("vcenter")
+    word_cell_format = workbook.add_format({'bold':True})
+    word_cell_format.set_border(1)
+    word_cell_format.set_align("center")
+    word_cell_format.set_align("vcenter")
+    word_cell_format.set_rotation(90)
+    word_cell_format.set_bold(True)
+
+    image_cell_format =  workbook.add_format()
+    image_cell_format.set_rotation(90)
+
+    worksheet.set_column(0,0,excellColumnWidth,image_cell_format)
 
     #iterate and write row by row
     wordIdx = 0
     row = 0
-    col = 0
 
     for wordIdx in range(len(wordsRaw)):
         word = wordsRaw[wordIdx]
-        while col < len(word):
-            if(word[col] == ','):
-                break
-            worksheet.write(row,col + startingWordColumnIdx, word.upper()[col],letter_cell_format)
-            col+= 1
-
-        foundPicture = InsertImageAtCellIfFound(row,col,word)
+ 
+        worksheet.write(row,startingWordColumnIdx, word.upper(),word_cell_format)
+            
+        foundPicture = InsertImageAtCellIfFound(row,0,word)
         
-        col = 0
         row += verticalGridPadding
-    worksheet.set_column(0,0,excellColumnWidth)
 
